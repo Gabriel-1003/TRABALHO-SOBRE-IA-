@@ -2,570 +2,61 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>TrAbAlHo-SoBrE-IA | Laboratório de Conceitos de IA</title>
-    <style>
-        /* style.css - modern dark/glassmorphic theme with tech accents */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            background: radial-gradient(circle at 20% 30%, #0a0f1e, #03050b);
-            font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, 'Roboto', sans-serif;
-            color: #eef5ff;
-            line-height: 1.5;
-            padding: 1.5rem;
-            min-height: 100vh;
-        }
-
-        /* glass container */
-        .app-container {
-            max-width: 1400px;
-            margin: 0 auto;
-            background: rgba(12, 20, 35, 0.55);
-            backdrop-filter: blur(12px);
-            border-radius: 2.5rem;
-            border: 1px solid rgba(80, 180, 255, 0.2);
-            box-shadow: 0 25px 45px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(66, 153, 225, 0.1);
-            overflow: hidden;
-            transition: all 0.2s ease;
-        }
-
-        /* header com estilo neon */
-        .hero {
-            padding: 2rem 2rem 1rem 2rem;
-            border-bottom: 1px solid rgba(0, 255, 255, 0.2);
-            background: linear-gradient(95deg, rgba(0, 20, 50, 0.6), rgba(0, 5, 15, 0.4));
-        }
-
-        .hero h1 {
-            font-size: 2.7rem;
-            font-weight: 700;
-            background: linear-gradient(135deg, #aaffff, #4c9aff);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            letter-spacing: -0.02em;
-            display: inline-block;
-            text-shadow: 0 2px 5px rgba(0,160,255,0.2);
-        }
-
-        .hero .sub {
-            font-size: 1rem;
-            color: #9ab3d5;
-            margin-top: 0.5rem;
-            display: flex;
-            gap: 1.5rem;
-            flex-wrap: wrap;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .badge {
-            background: #1e2a4a80;
-            backdrop-filter: blur(4px);
-            padding: 0.3rem 1rem;
-            border-radius: 40px;
-            font-size: 0.8rem;
-            font-family: monospace;
-            border: 1px solid cyan;
-            color: #7df9ff;
-        }
-
-        /* main grid: cards + área de demonstração */
-        .dashboard {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 1.8rem;
-            padding: 2rem;
-        }
-
-        .cards-panel {
-            flex: 1.2;
-            min-width: 260px;
-            display: flex;
-            flex-direction: column;
-            gap: 1.5rem;
-        }
-
-        .demo-panel {
-            flex: 2;
-            min-width: 300px;
-            background: rgba(0, 10, 25, 0.55);
-            border-radius: 1.8rem;
-            padding: 1.5rem;
-            border: 1px solid rgba(72, 187, 255, 0.3);
-            backdrop-filter: blur(4px);
-            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
-        }
-
-        /* cards estilizados */
-        .card {
-            background: rgba(18, 28, 45, 0.75);
-            border-radius: 1.5rem;
-            padding: 1.3rem 1.5rem;
-            transition: transform 0.2s, border 0.2s;
-            border: 1px solid rgba(64, 128, 255, 0.25);
-            cursor: pointer;
-        }
-
-        .card:hover {
-            transform: translateY(-4px);
-            border-color: #3b82f6;
-            background: rgba(28, 42, 70, 0.85);
-            box-shadow: 0 10px 25px -5px rgba(0, 150, 255, 0.2);
-        }
-
-        .card.active {
-            border-left: 6px solid #2dd4bf;
-            background: linear-gradient(110deg, #11223b, #0a1428);
-            box-shadow: 0 0 12px rgba(45, 212, 191, 0.3);
-        }
-
-        .card h3 {
-            font-size: 1.5rem;
-            font-weight: 600;
-            margin-bottom: 0.5rem;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .card p {
-            font-size: 0.9rem;
-            color: #bfd9ff;
-        }
-
-        .icon-emj {
-            font-size: 1.6rem;
-        }
-
-        /* área de output e interação */
-        .ai-output {
-            background: #010a18b3;
-            border-radius: 1.2rem;
-            padding: 1.2rem;
-            margin-top: 1rem;
-            font-family: 'Fira Code', monospace;
-            border: 1px solid #2c5282;
-            min-height: 180px;
-        }
-
-        .output-text {
-            color: #c3e2ff;
-            white-space: pre-wrap;
-            word-break: break-word;
-            font-size: 0.95rem;
-        }
-
-        .highlight {
-            color: #7ae9ff;
-            font-weight: 500;
-        }
-
-        button {
-            background: linear-gradient(95deg, #0f2b4b, #041b33);
-            border: 1px solid #2c7da0;
-            color: white;
-            font-weight: 500;
-            padding: 0.7rem 1.2rem;
-            border-radius: 2rem;
-            cursor: pointer;
-            transition: all 0.2s;
-            font-size: 0.85rem;
-            backdrop-filter: blur(5px);
-        }
-
-        button:hover {
-            background: #1e4a76;
-            border-color: #5bc0ff;
-            box-shadow: 0 0 8px #3b82f6;
-            transform: scale(0.98);
-        }
-
-        .interaction-bar {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 1rem;
-            margin: 1rem 0;
-            align-items: center;
-        }
-
-        input {
-            background: #0a1428dd;
-            border: 1px solid #2c5282;
-            padding: 0.7rem 1rem;
-            border-radius: 2rem;
-            color: white;
-            flex: 2;
-            min-width: 160px;
-            font-size: 0.9rem;
-        }
-
-        input:focus {
-            outline: none;
-            border-color: #3b82f6;
-            box-shadow: 0 0 6px #3b82f6;
-        }
-
-        .model-sim {
-            background: #05182e;
-            border-radius: 1rem;
-            padding: 1rem;
-            margin-top: 1rem;
-        }
-
-        .stats {
-            display: flex;
-            gap: 1rem;
-            margin-top: 1rem;
-            font-size: 0.8rem;
-            justify-content: space-between;
-            border-top: 1px solid #2d4a6e;
-            padding-top: 1rem;
-        }
-
-        @media (max-width: 780px) {
-            body {
-                padding: 0.8rem;
-            }
-            .hero h1 {
-                font-size: 1.9rem;
-            }
-            .dashboard {
-                padding: 1rem;
-            }
-        }
-
-        .footer-note {
-            text-align: center;
-            padding: 1rem;
-            font-size: 0.7rem;
-            color: #5f7f9e;
-            border-top: 1px solid rgba(72, 187, 255, 0.2);
-        }
-    </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/44/44805.png">
+    <title>Gabriel - Futuro do Futebol com IA</title>
 </head>
 <body>
-
-<div class="app-container">
-    <div class="hero">
-        <h1>⚡ TrAbAlHo-SoBrE-IA</h1>
-        <div class="sub">
-            <span>🧠 laboratório de conceitos · IA generativa simbólica</span>
-            <span class="badge">🤖 demo inteligência interativa</span>
+    <div class="caixa-principal">
+        <br>
+        <h1>GabrielFutebol</h1>
+        <br>
+        <h2>Você decide o futuro do Futebol com IA</h2>
+        <div class="caixa-perguntas"></div>
+        <div class="caixa-alternativas"></div>
+        <div class="caixa-resultado">
+            <p class="texto-resultado"></p>
         </div>
-    </div>
-
-    <div class="dashboard">
-        <!-- cards com temas de IA -->
-        <div class="cards-panel" id="cardsContainer">
-            <div class="card" data-topic="neural">
-                <h3><span class="icon-emj">🧬</span> Redes Neurais</h3>
-                <p>Perceptrons, ativação, backpropagation — simulação de neurônio artificial.</p>
+        <br>
+        
+        <div class="relogio">
+            <div>
+                <span id="horas">00</span>
+                <span class="tempo">Horas</span>
             </div>
-            <div class="card" data-topic="nlp">
-                <h3><span class="icon-emj">📖</span> Processamento de Linguagem</h3>
-                <p>Análise de sentimento & embeddings conceituais (simulado).</p>
+    
+            <div>
+                <span id="minutos">00</span>
+                <span class="tempo">Minutos</span>
             </div>
-            <div class="card" data-topic="genai">
-                <h3><span class="icon-emj">✨</span> IA Generativa</h3>
-                <p>Geração de texto estilo criativo com contexto dinâmico.</p>
-            </div>
-            <div class="card" data-topic="ethics">
-                <h3><span class="icon-emj">⚖️</span> Ética em IA</h3>
-                <p>Vieses, explicabilidade, alinhamento — reflexão crítica.</p>
+    
+            <div>
+                <span id="segundos">00</span>
+                <span class="tempo">Segundos</span>
             </div>
         </div>
-
-        <!-- painel direito interativo -->
-        <div class="demo-panel" id="demoPanel">
-            <div style="display: flex; justify-content: space-between; align-items: center;">
-                <h2 style="font-size: 1.5rem; font-weight: 500;">🧩 <span id="topicTitle">Redes Neurais</span></h2>
-                <button id="resetAction" style="background: none; border-color:#3b5f8a;">⟳ reiniciar</button>
-            </div>
-            <div id="dynamicContent">
-                <!-- conteúdo será preenchido via JS -->
-                <div class="ai-output">
-                    <div class="output-text" id="aiMessage">🧠 Clique em um card para explorar o tópico. Simulador de IA educacional ativo.</div>
-                </div>
-                <div class="interaction-bar" id="interactionArea"></div>
-                <div class="stats" id="statsArea">
-                    <span>📊 estado: <span id="stateIndicator">pronto</span></span>
-                    <span>⚙️ versão conceitual · IA explicável</span>
-                </div>
-            </div>
-        </div>
+        <section>
+            <footer>
+                <a href="https://github.com/professor-rafael" target="_blank" rel="noopener noreferrer">
+                    <img src="https://cdn-icons-png.flaticon.com/512/25/25231.png" alt="Github">
+                    <p>Github</p>
+                </a>
+                <a href="https://www.youtube.com/channel/UCBRq6fO_-P6yPOVbC0yZVmQ" target="_blank" rel="noopener noreferrer">
+                    <img src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png" alt="Youtube">
+                    <p>Youtube</p>
+                </a>
+                <a href="https://api.whatsapp.com/send?phone=5543996561825" target="_blank" rel="noopener noreferrer">
+                    <img src="https://cdn-icons-png.flaticon.com/512/1384/1384023.png" alt="Whatsapp">
+                    <p>Whatsapp</p>
+                </a>
+                <a href="https://www.deepseek.com/" target="_blank">
+                    <img src="https://cdn-icons-png.flaticon.com/512/2103/2103633.png" alt="Deepseek">
+                    <p>Deepseek</p>
+                </a>
+            </footer>
+        </section>
     </div>
-    <div class="footer-note">
-        🧪 experimento interativo | código modular | inspirado em fundamentos de inteligência artificial
-    </div>
-</div>
-
-<script>
-    // script.js - Toda a lógica de estado, simulação de IA e interação
-    (function(){
-        // ---------- Estado da aplicação ----------
-        let currentTopic = "neural";     // neural, nlp, genai, ethics
-        let conversationMemory = [];      // para simular contexto em IA generativa
-        let lastGenOutput = "";
-        
-        // Elementos do DOM
-        const cards = document.querySelectorAll('.card');
-        const topicTitleSpan = document.getElementById('topicTitle');
-        const aiMessageDiv = document.getElementById('aiMessage');
-        const interactionArea = document.getElementById('interactionArea');
-        const stateIndicator = document.getElementById('stateIndicator');
-        const resetBtn = document.getElementById('resetAction');
-        
-        // funções auxiliares de delay simulando "pensamento IA"
-        function setThinkingState() {
-            stateIndicator.innerText = '🤔 IA processando...';
-        }
-        
-        function setReadyState() {
-            stateIndicator.innerText = '✅ ativo';
-        }
-        
-        // Simulação de resposta inteligente com base no tópico e entrada do usuário
-        function simulateAIResponse(userInput = null) {
-            setThinkingState();
-            // Simula um pequeno atraso para parecer processamento (efeito didático)
-            setTimeout(() => {
-                let responseText = "";
-                const lowerInput = userInput ? userInput.toLowerCase().trim() : "";
-                
-                if (currentTopic === "neural") {
-                    if (!userInput) {
-                        responseText = "⚡ [Rede Neural Simulada] Um neurônio recebe entradas (x₁, x₂...), aplica pesos e função de ativação. Exemplo: sigmoide = 1/(1+e^-z). Quer testar um valor de ativação? Digite um número entre -5 e 5.";
-                    } else {
-                        let num = parseFloat(userInput);
-                        if (!isNaN(num) && userInput.length < 10) {
-                            // sigmoide simulada
-                            let sig = 1 / (1 + Math.exp(-num));
-                            responseText = `🧬 Ativação sigmoide para entrada ${num} → ${sig.toFixed(4)}. ${sig > 0.7 ? 'Neurônio fortemente ativado 🔥' : (sig < 0.3 ? 'Neurônio inibido 💤' : 'Ativação moderada ⚖️')}`;
-                        } else {
-                            responseText = `📡 Análise: "${userInput}" não é um número direto. Em redes neurais, os valores são contínuos. Tente um número (ex: 2.0) para ver a ativação.`;
-                        }
-                    }
-                }
-                else if (currentTopic === "nlp") {
-                    if (!userInput) {
-                        responseText = "📖 [NLP Simulator] Análise de sentimento: envie uma frase em português e detectarei emoção básica (positivo/negativo/neutro) usando heurística léxica + IA simbólica.";
-                    } else {
-                        // Simples análise léxica de sentimento (palavras-chave)
-                        const positivo = ["bom", "ótimo", "excelente", "feliz", "amor", "incrível", "gostei", "maravilha"];
-                        const negativo = ["ruim", "péssimo", "triste", "ódio", "horrível", "chato", "falha"];
-                        let score = 0;
-                        let words = lowerInput.split(/\W+/);
-                        words.forEach(w => {
-                            if(positivo.includes(w)) score++;
-                            if(negativo.includes(w)) score--;
-                        });
-                        let sentimento = score > 0 ? "positivo 😊" : (score < 0 ? "negativo 😞" : "neutro 😐");
-                        responseText = `📊 Análise de sentimento: "${userInput}" → tendência ${sentimento}. (score: ${score}) | Contextual embedding simulado.`;
-                        if(score === 0 && words.length > 2) responseText += " Frase mais neutra, IA detecta ambiguidade.";
-                    }
-                }
-                else if (currentTopic === "genai") {
-                    if (!userInput) {
-                        responseText = "✨ [IA Generativa] Escreva um prompt curto (tema, ideia) e gerarei uma continuação criativa baseada em padrões contextuais. Ex: 'futuro da IA' ou 'poema sobre código'.";
-                    } else {
-                        // Armazena memória simples
-                        conversationMemory.push(userInput);
-                        if(conversationMemory.length > 5) conversationMemory.shift();
-                        // Gerador criativo baseado em palavras-chave
-                        let genOutput = "";
-                        if(lowerInput.includes("poema") || lowerInput.includes("verso")) {
-                            genOutput = "🌙 *Poema Sintético*: \nAlgoritmos sonham com estrelas de dados,\nredes neurais tecem versos encantados,\no silício pulsa com luz de amanhã.";
-                        } else if(lowerInput.includes("futuro") || lowerInput.includes("2030")) {
-                            genOutput = "🚀 Previsão generativa: Em 2030, IAs colaborativas vão ampliar a criatividade humana, resolvendo desafios climáticos e educacionais.";
-                        } else if(lowerInput.includes("robô") || lowerInput.includes("robot")) {
-                            genOutput = "🤖 Robôs autônomos usarão aprendizado por reforço para navegar em mundos complexos, sempre com supervisão ética.";
-                        } else {
-                            genOutput = `📝 Geração criativa para "${userInput}": Imagine um ecossistema de IA onde conhecimento e arte se fundem, gerando insights nunca antes explorados. Essa é a fronteira generativa.`;
-                        }
-                        responseText = `✨ [Gerador IA] Prompt recebido: "${userInput}"\n\n${genOutput}\n\n🔁 memória de contexto: ${conversationMemory.length} interações.`;
-                        lastGenOutput = genOutput;
-                    }
-                }
-                else if (currentTopic === "ethics") {
-                    if (!userInput) {
-                        responseText = "⚖️ [Ética em IA] Um dos maiores desafios é mitigar vieses em dados e garantir transparência. Pergunte algo como 'viés em recrutamento' ou 'explicabilidade' para explorar.";
-                    } else {
-                        if(lowerInput.includes("viés") || lowerInput.includes("bias")) {
-                            responseText = "⚠️ Vieses algorítmicos: podem surgir de dados históricos desequilibrados. Soluções incluem auditoria de datasets e fairness constraints. Exemplo: modelos de contratação precisam de validação constante.";
-                        } else if(lowerInput.includes("explicabilidade") || lowerInput.includes("explicar")) {
-                            responseText = "🔍 Explicabilidade (XAI): técnicas como LIME e SHAP ajudam a entender decisões de modelos 'caixa-preta'. Importante para áreas críticas como saúde e justiça.";
-                        } else if(lowerInput.includes("alinhamento")) {
-                            responseText = "🧭 Alinhamento de IA: garantir que sistemas sigam valores humanos. Pesquisa em superalinhamento e reward modeling são áreas ativas.";
-                        } else {
-                            responseText = `🤔 Reflexão ética sobre: "${userInput}". A IA deve ser desenvolvida com responsabilidade, promovendo justiça, privacidade e benefício social.`;
-                        }
-                    }
-                }
-                else {
-                    responseText = "🤖 Selecione um tópico para iniciar a exploração interativa sobre IA.";
-                }
-                
-                aiMessageDiv.innerHTML = `<span class="highlight">🧠 IA response:</span> ${responseText}`;
-                setReadyState();
-            }, 80);
-        }
-        
-        // Renderizar a interface de acordo com o tópico (input/buttons específicos)
-        function renderInteractionUI() {
-            interactionArea.innerHTML = "";
-            if (currentTopic === "neural") {
-                const container = document.createElement('div');
-                container.className = "interaction-bar";
-                container.style.width = "100%";
-                container.innerHTML = `
-                    <input type="text" id="userInputNeural" placeholder="ex: 2.5, -1, 0.3 (ativação sigmoide)" />
-                    <button id="sendNeuralBtn">🔬 Calcular ativação</button>
-                `;
-                interactionArea.appendChild(container);
-                const sendBtn = document.getElementById('sendNeuralBtn');
-                const inputField = document.getElementById('userInputNeural');
-                if(sendBtn) {
-                    sendBtn.onclick = () => {
-                        const val = inputField.value;
-                        if(val.trim() !== "") simulateAIResponse(val);
-                        else simulateAIResponse(null);
-                    };
-                }
-                if(inputField) inputField.addEventListener("keypress", (e) => { if(e.key === "Enter") sendBtn.click(); });
-            } 
-            else if (currentTopic === "nlp") {
-                const container = document.createElement('div');
-                container.className = "interaction-bar";
-                container.innerHTML = `
-                    <input type="text" id="nlpInput" placeholder="Digite uma frase: 'Hoje estou feliz com IA'"/>
-                    <button id="analyzeSentimentBtn">📊 Analisar sentimento</button>
-                `;
-                interactionArea.appendChild(container);
-                const btn = document.getElementById('analyzeSentimentBtn');
-                const inp = document.getElementById('nlpInput');
-                if(btn) btn.onclick = () => { const text = inp.value; if(text.trim()) simulateAIResponse(text); else simulateAIResponse(null); };
-                if(inp) inp.addEventListener("keypress", (e) => { if(e.key === "Enter") btn.click(); });
-            }
-            else if (currentTopic === "genai") {
-                const container = document.createElement('div');
-                container.className = "interaction-bar";
-                container.innerHTML = `
-                    <input type="text" id="genPrompt" placeholder="Crie algo sobre: 'robôs artistas', 'poema digital' ..." />
-                    <button id="generateBtn">✨ Gerar conteúdo</button>
-                `;
-                interactionArea.appendChild(container);
-                const genBtn = document.getElementById('generateBtn');
-                const promptField = document.getElementById('genPrompt');
-                if(genBtn) genBtn.onclick = () => { const prompt = promptField.value; if(prompt.trim()) simulateAIResponse(prompt); else simulateAIResponse(null); };
-                if(promptField) promptField.addEventListener("keypress", (e) => { if(e.key === "Enter") genBtn.click(); });
-                // adicional: mostrar memória
-                const memDiv = document.createElement('div');
-                memDiv.style.fontSize = "0.75rem";
-                memDiv.style.marginTop = "0.5rem";
-                memDiv.style.color = "#9bb9e0";
-                memDiv.innerHTML = `📝 histórico de prompts: ${conversationMemory.length} itens (máx 5)`;
-                interactionArea.appendChild(memDiv);
-            }
-            else if (currentTopic === "ethics") {
-                const container = document.createElement('div');
-                container.className = "interaction-bar";
-                container.innerHTML = `
-                    <input type="text" id="ethicsQuery" placeholder="Ex: viés, explicabilidade, alinhamento..." />
-                    <button id="askEthicsBtn">🤔 Refletir</button>
-                `;
-                interactionArea.appendChild(container);
-                const ethicsBtn = document.getElementById('askEthicsBtn');
-                const ethicsInp = document.getElementById('ethicsQuery');
-                if(ethicsBtn) ethicsBtn.onclick = () => { const q = ethicsInp.value; if(q.trim()) simulateAIResponse(q); else simulateAIResponse(null); };
-                if(ethicsInp) ethicsInp.addEventListener("keypress", (e) => { if(e.key === "Enter") ethicsBtn.click(); });
-            }
-        }
-        
-        // Atualiza o conteúdo principal e carrega mensagem inicial com descrição do tópico
-        function loadTopic(topicId) {
-            currentTopic = topicId;
-            // Atualizar título
-            let topicDisplayName = "";
-            if(topicId === "neural") topicDisplayName = "🧬 Redes Neurais";
-            else if(topicId === "nlp") topicDisplayName = "📖 Processamento de Linguagem";
-            else if(topicId === "genai") topicDisplayName = "✨ IA Generativa";
-            else if(topicId === "ethics") topicDisplayName = "⚖️ Ética em IA";
-            else topicDisplayName = "Inteligência Artificial";
-            topicTitleSpan.innerText = topicDisplayName;
-            
-            // Resetar memória de conversa apenas para GenAI (contexto)
-            if(topicId !== "genai") {
-                conversationMemory = [];
-            } else {
-                // mantém mas podemos limpar para não conflitar, é opcional
-                if(conversationMemory.length > 4) conversationMemory = conversationMemory.slice(-3);
-            }
-            
-            // Renderizar UI específica
-            renderInteractionUI();
-            
-            // Mensagem inicial amigável baseada no tópico
-            let welcomeMsg = "";
-            switch(topicId) {
-                case "neural": welcomeMsg = "🧠 Simulador de neurônio artificial: insira um valor numérico para ver a ativação sigmoide. Explore como a IA aprende!"; break;
-                case "nlp": welcomeMsg = "📖 Análise de sentimento baseada em léxico. Escreva frases e veja como a IA classifica emoções. (Exemplo: 'Adoro tecnologia')"; break;
-                case "genai": welcomeMsg = "✨ IA Generativa experimental. Dê um tema criativo e receba uma composição textual única. A IA aprende padrões e gera novos conteúdos."; break;
-                case "ethics": welcomeMsg = "⚖️ Reflexões sobre Ética e IA. Pergunte sobre viés, transparência, ou explique dilemas. Vamos promover IA responsável."; break;
-                default: welcomeMsg = "Selecione um card para explorar funcionalidades de IA.";
-            }
-            aiMessageDiv.innerHTML = `<span class="highlight">📌 ${topicDisplayName}</span><br>${welcomeMsg}`;
-            setReadyState();
-        }
-        
-        // Eventos dos cards + destaque visual
-        function activateCard(topicId) {
-            cards.forEach(card => {
-                const topic = card.getAttribute('data-topic');
-                if(topic === topicId) {
-                    card.classList.add('active');
-                } else {
-                    card.classList.remove('active');
-                }
-            });
-        }
-        
-        // handler para clique nos cards
-        cards.forEach(card => {
-            card.addEventListener('click', (e) => {
-                const topic = card.getAttribute('data-topic');
-                if(topic) {
-                    activateCard(topic);
-                    loadTopic(topic);
-                }
-            });
-        });
-        
-        // Reset do tópico atual: limpa entradas e recarrega mensagem padrão e re-render UI
-        resetBtn.addEventListener('click', () => {
-            // mantém o mesmo tópico mas reseta estados como memória e interação
-            if(currentTopic === "genai") conversationMemory = [];
-            loadTopic(currentTopic);
-            // se existir campo input, opcionalmente limpar valores
-            const anyInput = interactionArea.querySelector('input');
-            if(anyInput) anyInput.value = "";
-            simulateAIResponse(null); // gera mensagem padrão do tópico após reset
-        });
-        
-        // inicialização: ativar card neural por padrão e carregar
-        const defaultCard = document.querySelector('.card[data-topic="neural"]');
-        if(defaultCard) defaultCard.classList.add('active');
-        loadTopic("neural");
-        // bônus: mensagem inicial simulada pra mostrar capacidade
-        setTimeout(() => {
-            if(currentTopic === "neural") simulateAIResponse(null);
-        }, 200);
-    })();
-</script>
 </body>
+<script src="script.js"></script>
 </html>
