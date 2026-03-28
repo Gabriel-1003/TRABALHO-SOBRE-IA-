@@ -1,153 +1,228 @@
-const caixaPrincipal = document.querySelector(".caixa-principal");
-const caixaPerguntas = document.querySelector(".caixa-perguntas");
-const caixaAlternativas = document.querySelector(".caixa-alternativas");
-const caixaResultado = document.querySelector(".caixa-resultado");
-const textoResultado = document.querySelector(".texto-resultado");
+// Banco de Dados de Perguntas
+const questionsDB = {
+    geral: [
+        {
+            question: "Qual é o primeiro livro da Bíblia?",
+            answers: [
+                { text: "Êxodo", correct: false },
+                { text: "Gênesis", correct: true },
+                { text: "Mateus", correct: false },
+                { text: "Apocalipse", correct: false }
+            ]
+        },
+        {
+            question: "Quem construiu a arca para sobreviver ao dilúvio?",
+            answers: [
+                { text: "Moisés", correct: false },
+                { text: "Abraão", correct: false },
+                { text: "Noé", correct: true },
+                { text: "Davi", correct: false }
+            ]
+        },
+        {
+            question: "Quantos mandamentos Deus deu a Moisés?",
+            answers: [
+                { text: "10", correct: true },
+                { text: "12", correct: false },
+                { text: "7", correct: false },
+                { text: "5", correct: false }
+            ]
+        }
+    ],
+    antigo: [
+        {
+            question: "Qual profeta foi engolido por um grande peixe?",
+            answers: [
+                { text: "Isaías", correct: false },
+                { text: "Jonas", correct: true },
+                { text: "Elias", correct: false },
+                { text: "Jeremias", correct: false }
+            ]
+        },
+        {
+            question: "Quem derrotou o gigante Golias?",
+            answers: [
+                { text: "Saul", correct: false },
+                { text: "Salomão", correct: false },
+                { text: "Davi", correct: true },
+                { text: "Sansão", correct: false }
+            ]
+        }
+    ],
+    novo: [
+        {
+            question: "Onde Jesus nasceu?",
+            answers: [
+                { text: "Nazareth", correct: false },
+                { text: "Jerusalém", correct: false },
+                { text: "Belém", correct: true },
+                { text: "Galileia", correct: false }
+            ]
+        },
+        {
+            question: "Qual discípulo traiu Jesus?",
+            answers: [
+                { text: "Pedro", correct: false },
+                { text: "Judas Iscariotes", correct: true },
+                { text: "João", correct: false },
+                { text: "Tomé", correct: false }
+            ]
+        }
+    ],
+    personagens: [
+        {
+            question: "Quem foi a mãe de Samuel?",
+            answers: [
+                { text: "Sara", correct: false },
+                { text: "Ana", correct: true },
+                { text: "Rebeca", correct: false },
+                { text: "Raquel", correct: false }
+            ]
+        },
+        {
+            question: "Quem teve o sonho da escada que chegava ao céu?",
+            answers: [
+                { text: "José", correct: false },
+                { text: "Jacó", correct: true },
+                { text: "Isaque", correct: false },
+                { text: "Esaú", correct: false }
+            ]
+        }
+    ]
+};
 
-const perguntas = [
-    {
-        enunciado: "Gabriel, você está assistindo a um jogo decisivo do campeonato. Uma nova tecnologia de IA promete prever jogadas e resultados com 95% de precisão. Qual sua reação?",
-        alternativas: [
-            {
-                texto: "Isso pode acabar com a emoção do futebol!",
-                afirmacao: "Gabriel ficou preocupado que a IA pudesse tirar a imprevisibilidade que torna o futebol tão emocionante. "
-            },
-            {
-                texto: "Incrível! Isso vai revolucionar a tática e treinamentos!",
-                afirmacao: "Gabriel ficou animado com as possibilidades táticas que a IA poderia trazer para o futebol."
-            }
-        ]
-    },
-    {
-        enunciado: "O técnico do seu time favorito quer usar IA para escalar os jogadores baseado em dados estatísticos. Como você se sente sobre isso?",
-        alternativas: [
-            {
-                texto: "Concordo! Dados são importantes para decisões mais precisas.",
-                afirmacao: "Gabriel passou a defender o uso de dados e IA para otimizar escalações e estratégias."
-            },
-            {
-                texto: "Discordo! O feeling do técnico e a intuição são insubstituíveis.",
-                afirmacao: "Gabriel valorizava a experiência humana e o conhecimento tático tradicional acima de algoritmos."
-            }
-        ]
-    },
-    {
-        enunciado: "Na escolinha de futebol onde você treina, surge a proposta de usar um sistema de IA para analisar os movimentos dos jovens jogadores e sugerir melhorias. Qual sua posição?",
-        alternativas: [
-            {
-                texto: "Apoio! Isso pode acelerar o desenvolvimento dos atletas.",
-                afirmacao: "Gabriel viu na IA uma ferramenta poderosa para formação de novos talentos."
-            },
-            {
-                texto: "Prefiro o treinamento tradicional com técnicos humanos.",
-                afirmacao: "Gabriel acreditava que o contato humano é essencial no desenvolvimento esportivo."
-            }
-        ]
-    },
-    {
-        enunciado: "Você precisa criar uma arte para o campeonato de futebol da escola. Como você faz?",
-        alternativas: [
-            {
-                texto: "Desenho manualmente no papel ou uso programas tradicionais.",
-                afirmacao: "Gabriel desenvolveu habilidades artísticas manuais e valorizou o processo criativo tradicional."
-            },
-            {
-                texto: "Uso um gerador de imagens com IA para criar algo profissional.",
-                afirmacao: "Gabriel descobriu que a IA pode ajudar a criar artes incríveis rapidamente."
-            }
-        ]
-    },
-    {
-        enunciado: "Seu amigo usou IA para escrever uma análise tática do próximo jogo, mas o texto ficou muito genérico. O que você faz?",
-        alternativas: [
-            {
-                texto: "Uso o texto da IA como base e adiciono minhas próprias análises.",
-                afirmacao: "Gabriel aprendeu que a IA deve ser uma ferramenta de apoio, não o trabalho final."
-            },
-            {
-                texto: "Entrego do jeito que está, afinal a IA é muito inteligente.",
-                afirmacao: "Gabriel percebeu que confiar cegamente na IA pode levar a resultados superficiais."
-            }
-        ]
-    }
-];
+// Variáveis de Estado
+let currentQuestions = [];
+let currentQuestionIndex = 0;
+let score = 0;
 
-let atual = 0;
-let perguntaAtual;
-let historiaFinal = "";
+// Elementos do DOM
+const startScreen = document.getElementById('start-screen');
+const quizScreen = document.getElementById('quiz-screen');
+const resultScreen = document.getElementById('result-screen');
 
-function mostraPergunta() {
-    if (atual >= perguntas.length) {
-        mostraResultado();
-        return;
-    }
-    perguntaAtual = perguntas[atual];
-    caixaPerguntas.textContent = perguntaAtual.enunciado;
-    caixaAlternativas.textContent = "";
-    mostraAlternativas();
-}
+const startBtn = document.getElementById('start-btn');
+const nextBtn = document.getElementById('next-btn');
+const restartBtn = document.getElementById('restart-btn');
+const categorySelect = document.getElementById('category');
 
-function mostraAlternativas() {
-    for (const alternativa of perguntaAtual.alternativas) {
-        const botaoAlternativas = document.createElement("button");
-        botaoAlternativas.textContent = alternativa.texto;
-        botaoAlternativas.addEventListener("click", () => respostaSelecionada(alternativa));
-        caixaAlternativas.appendChild(botaoAlternativas);
-    }
-}
+const questionText = document.getElementById('question-text');
+const answerButtonsElement = document.getElementById('answer-buttons');
+const questionCountSpan = document.getElementById('question-count');
+const scoreSpan = document.getElementById('score-display');
+const finalScoreSpan = document.getElementById('final-score');
+const totalQuestionsSpan = document.getElementById('total-questions');
+const resultMessage = document.getElementById('result-message');
 
-function respostaSelecionada(opcaoSelecionada) {
-    const afirmacoes = opcaoSelecionada.afirmacao;
-    historiaFinal += afirmacoes + " ";
-    atual++;
-    mostraPergunta();
-}
+// Event Listeners
+startBtn.addEventListener('click', startGame);
+nextBtn.addEventListener('click', () => {
+    currentQuestionIndex++;
+    setNextQuestion();
+});
+restartBtn.addEventListener('click', () => {
+    resultScreen.classList.remove('active');
+    startScreen.classList.add('active');
+});
 
-function mostraResultado() {
-    caixaPerguntas.textContent = "🏆 O FUTURO DE GABRIEL NO FUTEBOL 🏆";
-    textoResultado.innerHTML = `<strong>⚽ Gabriel em 2030... ⚽</strong><br><br>${historiaFinal}<br><br>🏅 A jornada de Gabriel mostra como a IA e o futebol podem caminhar juntos, mantendo sempre a essência do esporte: a paixão, a emoção e o talento humano! 🏅`;
-    caixaAlternativas.textContent = "";
+// Funções Principais
+function startGame() {
+    const category = categorySelect.value;
     
-    // Adiciona botão para reiniciar
-    const botaoReiniciar = document.createElement("button");
-    botaoReiniciar.textContent = "⚽ RECOMEÇAR JORNADA ⚽";
-    botaoReiniciar.style.background = "linear-gradient(135deg, #FFD700 0%, #FFA500 100%)";
-    botaoReiniciar.style.color = "#1a472a";
-    botaoReiniciar.style.marginTop = "20px";
-    botaoReiniciar.addEventListener("click", () => {
-        atual = 0;
-        historiaFinal = "";
-        mostraPergunta();
-        caixaResultado.style.display = "none";
-        caixaPerguntas.style.display = "block";
-        caixaAlternativas.style.display = "flex";
+    // Se for 'geral', misturamos todas as perguntas, senão pegamos da categoria
+    if (category === 'geral') {
+        currentQuestions = [
+            ...questionsDB.antigo,
+            ...questionsDB.novo,
+            ...questionsDB.personagens
+        ];
+        // Embaralhar perguntas
+        currentQuestions.sort(() => Math.random() - 0.5);
+    } else {
+        currentQuestions = [...questionsDB[category]];
+    }
+
+    currentQuestionIndex = 0;
+    score = 0;
+    
+    startScreen.classList.remove('active');
+    quizScreen.classList.add('active');
+    
+    setNextQuestion();
+}
+
+function setNextQuestion() {
+    resetState();
+    if (currentQuestionIndex < currentQuestions.length) {
+        showQuestion(currentQuestions[currentQuestionIndex]);
+        questionCountSpan.innerText = `Questão ${currentQuestionIndex + 1} de ${currentQuestions.length}`;
+        scoreSpan.innerText = `Pontos: ${score}`;
+    } else {
+        showResults();
+    }
+}
+
+function showQuestion(question) {
+    questionText.innerText = question.question;
+    
+    question.answers.forEach(answer => {
+        const button = document.createElement('button');
+        button.innerText = answer.text;
+        button.classList.add('answer-btn');
+        if (answer.correct) {
+            button.dataset.correct = answer.correct;
+        }
+        button.addEventListener('click', selectAnswer);
+        answerButtonsElement.appendChild(button);
     });
+}
+
+function resetState() {
+    nextBtn.style.display = 'none';
+    while (answerButtonsElement.firstChild) {
+        answerButtonsElement.removeChild(answerButtonsElement.firstChild);
+    }
+}
+
+function selectAnswer(e) {
+    const selectedBtn = e.target;
+    const isCorrect = selectedBtn.dataset.correct === "true";
     
-    caixaAlternativas.appendChild(botaoReiniciar);
-    caixaResultado.style.display = "block";
-    caixaPerguntas.style.display = "none";
-    caixaAlternativas.style.display = "flex";
+    if (isCorrect) {
+        selectedBtn.classList.add('correct');
+        score++;
+        scoreSpan.innerText = `Pontos: ${score}`;
+    } else {
+        selectedBtn.classList.add('wrong');
+    }
+
+    // Mostrar a resposta correta e desabilitar todos
+    Array.from(answerButtonsElement.children).forEach(button => {
+        if (button.dataset.correct === "true") {
+            button.classList.add('correct');
+        }
+        button.disabled = true;
+    });
+
+    nextBtn.style.display = 'block';
 }
 
-// Relógio
-const horas = document.getElementById('horas');
-const minutos = document.getElementById('minutos');
-const segundos = document.getElementById('segundos');
-
-function atualizarRelogio() {
-    let dateToday = new Date();
-    let hr = dateToday.getHours();
-    let min = dateToday.getMinutes();
-    let s = dateToday.getSeconds();
-
-    horas.textContent = hr < 10 ? '0' + hr : hr;
-    minutos.textContent = min < 10 ? '0' + min : min;
-    segundos.textContent = s < 10 ? '0' + s : s;
+function showResults() {
+    quizScreen.classList.remove('active');
+    resultScreen.classList.add('active');
+    
+    finalScoreSpan.innerText = score;
+    totalQuestionsSpan.innerText = currentQuestions.length;
+    
+    const percentage = (score / currentQuestions.length) * 100;
+    
+    if (percentage === 100) {
+        resultMessage.innerText = "Perfeito! Você é um mestre da Bíblia! 🌟";
+    } else if (percentage >= 70) {
+        resultMessage.innerText = "Muito bom! Continue estudando a Palavra. 📖";
+    } else if (percentage >= 40) {
+        resultMessage.innerText = "Bom esforço! Que tal revisar alguns capítulos? 🤔";
+    } else {
+        resultMessage.innerText = "Não desanime! A Bíblia é um livro fascinante para aprender. 💪";
+    }
 }
-
-setInterval(atualizarRelogio, 1000);
-atualizarRelogio();
-
-// Inicialização
-caixaResultado.style.display = "none";
-mostraPergunta();

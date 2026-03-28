@@ -1,62 +1,61 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Bíblico Interativo</title>
     <link rel="stylesheet" href="style.css">
-    <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/44/44805.png">
-    <title>Gabriel - Futuro do Futebol com IA</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <div class="caixa-principal">
-        <br>
-        <h1>GabrielFutebol</h1>
-        <br>
-        <h2>Você decide o futuro do Futebol com IA</h2>
-        <div class="caixa-perguntas"></div>
-        <div class="caixa-alternativas"></div>
-        <div class="caixa-resultado">
-            <p class="texto-resultado"></p>
+
+    <div class="quiz-container">
+        <!-- Tela Inicial -->
+        <div id="start-screen" class="screen active">
+            <h1>📖 Quiz Bíblico</h1>
+            <p>Teste seus conhecimentos sobre as Escrituras!</p>
+            <div class="category-select">
+                <label for="category">Escolha o tema:</label>
+                <select id="category">
+                    <option value="geral">Geral</option>
+                    <option value="antigo">Antigo Testamento</option>
+                    <option value="novo">Novo Testamento</option>
+                    <option value="personagens">Personagens</option>
+                </select>
+            </div>
+            <button id="start-btn" class="btn-primary">Começar Quiz</button>
         </div>
-        <br>
-        
-        <div class="relogio">
-            <div>
-                <span id="horas">00</span>
-                <span class="tempo">Horas</span>
+
+        <!-- Tela do Quiz -->
+        <div id="quiz-screen" class="screen">
+            <div class="header">
+                <span id="question-count">Questão 1 de 10</span>
+                <span id="score-display">Pontos: 0</span>
             </div>
-    
-            <div>
-                <span id="minutos">00</span>
-                <span class="tempo">Minutos</span>
+            
+            <div class="question-box">
+                <h2 id="question-text">Carregando pergunta...</h2>
             </div>
-    
-            <div>
-                <span id="segundos">00</span>
-                <span class="tempo">Segundos</span>
+
+            <div id="answer-buttons" class="btn-grid">
+                <!-- Botões gerados via JS -->
             </div>
+
+            <button id="next-btn" class="btn-primary next-btn">Próxima Pergunta</button>
         </div>
-        <section>
-            <footer>
-                <a href="https://github.com/professor-rafael" target="_blank" rel="noopener noreferrer">
-                    <img src="https://cdn-icons-png.flaticon.com/512/25/25231.png" alt="Github">
-                    <p>Github</p>
-                </a>
-                <a href="https://www.youtube.com/channel/UCBRq6fO_-P6yPOVbC0yZVmQ" target="_blank" rel="noopener noreferrer">
-                    <img src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png" alt="Youtube">
-                    <p>Youtube</p>
-                </a>
-                <a href="https://api.whatsapp.com/send?phone=5543996561825" target="_blank" rel="noopener noreferrer">
-                    <img src="https://cdn-icons-png.flaticon.com/512/1384/1384023.png" alt="Whatsapp">
-                    <p>Whatsapp</p>
-                </a>
-                <a href="https://www.deepseek.com/" target="_blank">
-                    <img src="https://cdn-icons-png.flaticon.com/512/2103/2103633.png" alt="Deepseek">
-                    <p>Deepseek</p>
-                </a>
-            </footer>
-        </section>
+
+        <!-- Tela de Resultado -->
+        <div id="result-screen" class="screen">
+            <h2>Quiz Finalizado! 🎉</h2>
+            <div class="result-circle">
+                <span id="final-score">0</span>
+                <small>de <span id="total-questions">0</span></small>
+            </div>
+            <p id="result-message">Mensagem de resultado</p>
+            <button id="restart-btn" class="btn-primary">Jogar Novamente</button>
+        </div>
     </div>
+
+    <script src="script.js"></script>
 </body>
-<script src="script.js"></script>
 </html>
